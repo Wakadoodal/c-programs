@@ -1,0 +1,74 @@
+#include<stdio.h>
+struct poly
+{
+    int cf;
+    int px;
+};
+typedef struct poly P;
+void accept(P p1[20],int n)
+{
+    printf("enter the cf and px");
+    for(int i=0;i<n;i++)
+    {
+        printf("enter %d cf and px",i);
+        scanf("%d %d",&p1[i].cf,&p1[i].px);
+    }
+}
+void display(P p1[20],int n)
+{
+    printf("the polynomial is:\n");
+    for(int i=0;i<n;i++)
+    {
+        if(p1[i].cf>0)
+          printf("+%d^%d",p1[i].cf,p1[i].px);
+        else
+           printf("%d^%d",p1[i].cf,p1[i].px);
+    }
+}
+int add(P p1[20],P p2[20],int n1,int n2)
+{
+    P res[20];
+    int i,j,k=0;
+    for(i=0;i<n1;i++)
+    {
+        for(j=0;j<n2;j++)
+        {
+            if(p1[i].px==p2[j].px)
+            {
+                res[k].cf=p1[i].cf+p2[j].cf;
+                res[k].px=p1[i].px;
+                k++;
+                p2[j].cf=999;
+                break;
+            }
+            if(j==n2)
+            {
+                res[k].cf=p1[i].cf;
+                res[k].px=p1[i].px;
+                k++;
+            }
+        }
+    }
+    for(j=0;j<n2;j++)
+    {
+        if(p2[j].cf!=999)
+        {
+            res[k].cf=p2[j].cf;
+            res[k].px=p2[j].px;
+             k++;
+        }        
+    }
+   display(res,k);
+}
+int main()
+{
+    P p1[20],p2[20];
+    int n1,n2,k;
+    printf("enter the number of terms for both polynomials");
+    scanf("%d %d",&n1,&n2);
+    accept(p1,n1);
+    accept(p2,n2);
+    display(p1,n1);
+    display(p2,n2);
+    k=add(p1,p2,n1,n2);
+}
