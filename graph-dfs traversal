@@ -1,0 +1,47 @@
+#include<stdio.h>
+int a[20][20],F[20];
+void accept(int n)
+{
+    int i,j;
+    printf("enter the cities");
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<n;j++)
+           scanf("%d",&a[i][j]);
+    }
+}
+void dfs(int u,int n)
+{
+    int v,top=-1,s[20];
+    printf("\nthe cities rechable from %d",u);
+    s[++top]=u;
+    F[u]=1;
+    printf("%d",u);
+    while(top!=-1)
+    {
+        u=s[top--];
+        for(v=0;v<n;v++)
+        {
+            if((a[u][v]==1)&&(F[v]==0))
+            {
+                printf("%d",v);
+                 F[v]=1;
+                s[++top]=v;
+            }
+        }
+    }
+}
+int main()
+{
+    int n,source,i;
+    printf("enter the number of cities");
+    scanf("%d",&n);
+    accept(n);
+    for(source=0;source<n;source++)
+    {
+        for(i=0;i<n;i++)
+          F[i]=0;
+         dfs(source,n);
+    }
+   
+}
