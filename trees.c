@@ -1,0 +1,52 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int info;
+    struct node *Rlink,*Llink;
+};
+typedef struct node *NODE;
+NODE getnode()
+{
+    NODE x;
+    x=(NODE)malloc(sizeof(struct  node));
+    if(x==NULL)
+    {
+        printf("NO");
+        exit(0);
+    }
+    return x;
+}
+NODE create(int arr[],int index,int size)
+{
+    NODE root=NULL;
+    if(index<size)
+    {
+        root=getnode();
+        root->info=arr[index];
+        root->Llink=create(arr,(2*index+1),size);
+        root->Rlink=create(arr,(2*index+2),size);
+    }
+    return root;
+}
+void Inorder(NODE root)
+{
+    if(root==NULL)
+    {
+        return;
+    }
+    Inorder(root->Llink);
+    printf("%d",root->info);
+    Inorder(root->Rlink);
+}
+int main()
+{
+    NODE root;
+    int arr[]={1,2,3,4,5};
+    int size,starting_index;
+    size=sizeof(arr)/sizeof(arr[0]);
+    starting_index=0;
+    root=create(arr,starting_index,size);
+    Inorder(root);
+    return 0;
+}
